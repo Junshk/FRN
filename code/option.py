@@ -19,29 +19,29 @@ parser.add_argument('--seed', type=int, default=1,
                     help='random seed')
 
 # Data specifications
-parser.add_argument('--dir_data', type=str, default='/home/junhk/dataset',
+parser.add_argument('--dir_data', type=str, default='/home/hosan/dataset/ntire2019/trainval',
                     help='dataset directory')
 parser.add_argument('--dir_demo', type=str, default='../test',
                     help='demo image directory')
 parser.add_argument('--data_train', type=str, default='NTIRE',
                     help='train dataset name')
-parser.add_argument('--data_test', type=str, default='NTIRE',  # or NTIRE_VAL 
+parser.add_argument('--data_test', type=str, default='NTIRE_VAL',
                     help='test dataset name')
 parser.add_argument('--benchmark_noise', action='store_true',
                     help='use noisy benchmark sets')
-parser.add_argument('--n_train', type=int, default=30,
+parser.add_argument('--n_train', type=int, default=40,
                     help='number of training set')
 parser.add_argument('--n_val', type=int, default=10,
                     help='number of validation set')
-parser.add_argument('--offset_val', type=int, default=30,
+parser.add_argument('--offset_val', type=int, default=0,
                     help='validation index offest')
 parser.add_argument('--ext', type=str, default='img',
                     help='dataset file extension')
 parser.add_argument('--scale', default='4',
                     help='super resolution scale')
-parser.add_argument('--px', type=int, default=1,
-                    help='pixshuff downup scale (in RCAN-PS)')
-parser.add_argument('--patch_size', type=int, default=192,
+parser.add_argument('--px', type=int, default=2,
+                    help='super resolution scale')
+parser.add_argument('--patch_size', type=int, default=224,
                     help='output patch size')
 parser.add_argument('--rgb_range', type=int, default=255,
                     help='maximum value of RGB')
@@ -53,7 +53,7 @@ parser.add_argument('--chop', action='store_true',
                     help='enable memory-efficient forward')
 
 # Model specifications
-parser.add_argument('--model', default='FRN_UPDOWN',
+parser.add_argument('--model', default='RCAN_UPDOWN',
                     help='model name')
 
 parser.add_argument('--act', type=str, default='relu',
@@ -63,7 +63,7 @@ parser.add_argument('--pre_train', type=str, default='.',
 parser.add_argument('--extend', type=str, default='.',
                     help='pre-trained model directory')
 parser.add_argument('--n_resblocks', type=int, default=8,
-                    help='number of innermost blocks of FRN (i.e. RCAN-PS)')
+                    help='number of residual blocks')
 parser.add_argument('--n_feats', type=int, default=64,
                     help='number of feature maps')
 parser.add_argument('--res_scale', type=float, default=1,
@@ -77,11 +77,11 @@ parser.add_argument('--precision', type=str, default='single',
 # Training specifications
 parser.add_argument('--reset', action='store_true',
                     help='reset the training')
-parser.add_argument('--test_every', type=int, default=200,
+parser.add_argument('--test_every', type=int, default=400,
                     help='do test per every N batches')
-parser.add_argument('--epochs', type=int, default=1000,
+parser.add_argument('--epochs', type=int, default=200,
                     help='number of epochs to train')
-parser.add_argument('--batch_size', type=int, default=8,
+parser.add_argument('--batch_size', type=int, default=4,
                     help='input batch size for training')
 parser.add_argument('--split_batch', type=int, default=1,
                     help='split the batch into smaller chunks')
@@ -95,7 +95,7 @@ parser.add_argument('--gan_k', type=int, default=1,
 # Optimization specifications
 parser.add_argument('--lr', type=float, default=1e-4,
                     help='learning rate')
-parser.add_argument('--lr_decay', type=int, default=400,
+parser.add_argument('--lr_decay', type=int, default=200,
                     help='learning rate decay per N epochs')
 parser.add_argument('--decay_type', type=str, default='step',
                     help='learning rate decay type')
@@ -138,8 +138,12 @@ parser.add_argument('--save_results', action='store_true',
                     help='save output results')
 
 # options for residual group and feature channel reduction
-parser.add_argument('--n_resgroups', type=list, nargs='+', default=[2, 4, 8],
-                    help='number of residual groups in fractal residual groups')
+parser.add_argument('--n_resgroups', type=int, default=8,
+                    help='number of residual groups')
+parser.add_argument('--n_resgroups2', type=int, default=4,
+                    help='number of residual groups')
+parser.add_argument('--n_resgroups3', type=int, default=2,
+                    help='number of residual groups')
 parser.add_argument('--reduction', type=int, default=16,
                     help='number of feature maps reduction')
 # options for test

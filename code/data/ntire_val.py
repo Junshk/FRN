@@ -36,7 +36,7 @@ class NTIRE_VAL(srdata.SRData):
         return list_hr, list_lr
 
     def _set_filesystem(self, dir_data):
-        self.apath = dir_data + '/ntire2019'
+        self.apath = dir_data #+ '/ntire2019'
         self.dir_hr = os.path.join(self.apath, 'val')
         self.dir_lr = os.path.join(self.apath, 'val')
         self.ext = '.png'
